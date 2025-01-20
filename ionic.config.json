@@ -1,0 +1,7 @@
+{
+  "name": "gruas.appionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
