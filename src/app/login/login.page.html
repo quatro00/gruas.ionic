@@ -1,13 +1,67 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>login</ion-title>
+<!-- <ion-header [translucent]="false" style="box-shadow: none">
+  <ion-toolbar color="bg" style="padding: 5px 15px;--border-width: 0 0;">
+   
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding" style="background-color: var(--ion-color-bg);">
+  
+
+
+  <ion-img [src]="darkMode? '../../../../assets/image/logod.png' : '../../../../assets/image/Logo.png' " style="height: 65px;width: 100%;margin-top: 40px;"></ion-img>
+  <div class="ion-text-center" style="margin-top: 5px;">
+    <ion-text class="title" style="color: var(--ion-color-p1);">Servicios MC</ion-text>
+  </div>
+
+  <form  [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div style="margin-top: 30px;">
+      <ion-text class="s32" >Ingresar</ion-text>
+    </div>
+  
+    <div style="margin-top: 20px;">
+      <ion-text class="s15" >Usuario/Correo</ion-text>
+    </div>
+    <div lines="none" class="input" style="margin-top: 10px" >
+        <div style="height: 29px;width: 1px;background-color: var(--ion-color-border);"></div>
+      <ion-input  formControlName="username" type="text" placeholder="Usuario/Correo" style="margin-left: 10px;"></ion-input>
+      <div *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched" class="error">
+       *
+      </div>
+    </div>
+    <div style="margin-top: 20px;">
+      <ion-text class="s15" >Contraseña</ion-text>
+    </div>
+    <div lines="none" class="input" style="margin-top: 10px" >
+      <div style="height: 29px;width: 1px;background-color: var(--ion-color-border);"></div>
+    <ion-input formControlName="password" type="password" placeholder="Contraseña" style="margin-left: 10px;"></ion-input>
+    <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched" class="error">
+      *
+    </div>
+  </div>
+    <ion-button expand="block"  type="submit" color="primary" style="margin-top: 20px;margin-bottom: 20px;" [disabled]="loginForm.invalid">Ingresar</ion-button>
+  
+  </form>
+  
+
+ 
+  <div class="list" style="justify-content: center; display: flex;margin-top: 15px;margin-bottom: 20px;">
+    <ion-text class="s13" style="color: var(--ion-color-txt);">Olvidaste tu contraseña?  </ion-text>
+    <ion-text routerLink="/signup" class="b12" style="color: var(--ion-color-primary);margin-left: 5px;" (click)="goToRecuperarContrasena()">Da clic aqui</ion-text>
+  </div>
+
+  <div class="list" style="justify-content: center; display: flex;margin-top: 15px;margin-bottom: 20px;">
+    <ion-text class="s13" style="color: var(--ion-color-txt);">Quieres ser proveedor?  </ion-text>
+    <ion-text routerLink="/signup" class="b12" style="color: var(--ion-color-primary);margin-left: 5px;">Llamanos</ion-text>
+  </div>
+
 </ion-content>
+
+
+<style>
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 16px;
+  }
+</style>

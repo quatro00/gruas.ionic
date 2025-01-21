@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  //apiBaseUrl:'https://apidevproveedores.bodesa.com.mx:7678'
+  apiBaseUrl:'https://localhost:7286',
+  //apiBaseUrl:'https://quatro0-001-site1.ktempurl.com',
 };
 
 /*
