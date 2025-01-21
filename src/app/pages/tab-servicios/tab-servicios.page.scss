@@ -1,0 +1,34 @@
+.md ion-segment{
+    background-color: var(--ion-color-box);
+    // color:#FF991F;
+    ion-segment-button{
+        --indicator-height:0;
+        --color: var(--ion-color-dis);
+        --color-checked: var(--ion-color-p1);
+        --background:var(--ion-color-box);
+        --background-checked:var(--ion-color-box) !important;
+        ion-label{
+            // color: var(--ion-color-txt);
+            font-size: 15px;
+            font-family: Inter-Semibold;
+        }
+    }
+}
+
+.ios ion-segment{
+    background-color: var(--ion-color-box);
+    // color: #FF991F;
+    ion-segment-button{
+    --indicator-height:0;
+    --color: var(--ion-color-txt1);
+    --color-checked:  var(--ion-color-p1);
+    --background:var(--ion-color-box);
+    --background-checked:var(--ion-color-tab) !important;
+    margin: 3px 3px;
+    ion-label{
+        color: var(--ion-color-txt);
+        font-size: 15px;
+        font-family: Inter-Semibold;
+    }
+    }
+}

@@ -1,0 +1,106 @@
+<ion-header [translucent]="false" style="box-shadow: none;background-color: var(--ion-color-bg1);">
+  <ion-toolbar color="bg1" style="padding: 5px 15px;--border-width: 0 0;">
+    <div class="list">
+      <div class="vchip"></div>
+      <ion-text class="s18" style="flex:1">Inicio</ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding" style="background-color: var(--ion-color-bg1);">
+
+  <div class="scroll list box" style="background-color: var(--ion-color-box);">
+    <div>
+      <div class="box1" style="background-color: #EAF6EF;width: 150px;">
+        <div class="list" style="margin-bottom: 10px;">
+          <ion-text class="s13" style="color: #33383F;">Serv. proximos</ion-text>
+        </div>
+        <ion-text class="s13" style="color: #33383F;font-size: 15px;">{{ serviciosProximos }}</ion-text>
+        <div class="chip list"
+          style="border-width: 0;background-color: #FFFFFF;margin-top: 10px;width: 120px;padding: 0 8px;height: 30px;">
+          <ion-text class="m14" style="color: #6A9B7E;">Ver detalle</ion-text>
+          <ion-icon name="chevron-forward" style="font-size: 16px;color: #6A9B7E;margin-left: 5px;" />
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="box1" style="background-color: #E9F6FC;width: 150px;margin-left: 10px;">
+        <div class="list" style="margin-bottom: 10px;">
+          <ion-text class="s13" style="color: #33383F;">Total en el mes</ion-text>
+        </div>
+        <ion-text class="s13" style="color: #33383F;font-size: 15px;">{{ totalEnElMes  | currency:'MXN':'symbol':'1.2-2'}}</ion-text>
+        <div class="chip list"
+          style="border-width: 0;background-color: #FFFFFF;margin-top: 10px;width: 120px;padding: 0 8px;height: 30px;">
+          <ion-text class="m14" style="color: #6A9B7E;">Ver detalle</ion-text>
+          <ion-icon name="chevron-forward" style="font-size: 16px;color: #6A9B7E;margin-left: 5px;" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box1" style="background-color: var(--ion-color-box);margin-top: 15px;margin-bottom: 80px;">
+    <div class="list">
+      <div style="height: 20px;width: 4px;background-color: #CABDFF;border-radius: 20px;"></div>
+      <ion-text class="s18" style="margin-left: 10px;flex: 1;">Servicios por cotizar</ion-text>
+      <div routerLink="/cleanigservice" class="icono list" style="height: 35px;border: 1px solid var(--ion-color-lines);border-radius: 30px;">
+        <ion-icon name="filter" style="font-size: 13px;color: var(--ion-color-txt1);"/>
+      </div>
+    </div>
+    <div>
+      <div *ngFor="let servicio of serviciosDisponibles">
+        <div routerLink="/bsdetail" class="list2">
+          <div style="margin-left: 15px;flex: 1;">
+
+            <div class="list" style="margin-bottom: 8px;">
+              <ion-text class="s15" style="margin-left: 10px;flex:1">Folio # {{ servicio.folio }}</ion-text>
+              <ion-icon name="ellipsis-horizontal" style="font-size: 20px;color: #6F767E;" />
+            </div>
+            <div style="margin-top: 5px;margin-bottom: 5px;">
+              <table style="width: 100%;">
+                <tr>
+                  <td style="padding-bottom:10px" colspan="2">
+                    <ion-text class="m12">📍<b>Origen: </b>{{ servicio.origen }}</ion-text>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding-bottom:10px" colspan="2">
+                    <ion-text class="m12">📍<b>Destino: </b>{{ servicio.destino }}</ion-text>
+                  </td>
+                </tr>
+
+                <tr style="margin-top: 5px;margin-bottom: 5px;">
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">🛣️<b>Distancia: </b>{{ servicio.kms }} Kms.</ion-text>
+                  </td>
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">🚗<b>Vehiculo: </b>{{ servicio.tipoVehiculo }}</ion-text>
+                  </td>
+                </tr>
+
+                <tr style="margin-top: 5px;margin-bottom: 5px;">
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">📅<b>Fecha: </b>{{ servicio.kms }} Kms.</ion-text>
+                  </td>
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">🔧<b>Maniobras: </b>{{ servicio.tipoVehiculo }}</ion-text>
+                  </td>
+                </tr>
+                
+
+              </table>
+            </div>
+            <div class="tag" style="width: 100%;">
+              <ion-text class="s12" style="color: #1A1D1F;">Sugerido:{{ servicio.totalSugerido | currency}} | Cotizado: {{servicio.totalCotizado | currency}}</ion-text>
+            </div>
+
+            <div style="margin-top: 10px;">
+              <ion-button expand="block" color="primary" (click)="onCotizar()">Cotizar</ion-button>
+            </div>
+
+          </div>
+        </div>
+        <div class="lines"></div>
+      </div>
+    </div>
+  </div>
+</ion-content>

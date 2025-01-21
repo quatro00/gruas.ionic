@@ -68,7 +68,7 @@ export class LoginPage implements OnInit {
         await loading.dismiss(); // Oculta el loader
 
         //mandamos a la pagina principal
-        this.router.navigate(['/home']), { replaceUrl: true };
+        this.router.navigate(['/tabs']), { replaceUrl: true };
       },
       error: async (err:any) => {
         //console.error(err.error.errors.error[0]);

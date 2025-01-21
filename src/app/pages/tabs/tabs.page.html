@@ -1,0 +1,26 @@
+<ion-tabs #tabs (ionTabsDidChange)="setCurrentTab();" >
+
+  <!-- -------------------Custom Tabs with fab button------------------------------- -->
+  
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-img [src]=" selectTab == 'home' ? '../../../assets/image/t1f.png' : '../../../assets/image/t1.png'" style="height: 24px;width: 24px;"/>
+     
+    </ion-tab-button>
+    <ion-tab-button tab="servicios" >
+      <ion-img [src]=" selectTab == 'servicios' ? '../../../assets/image/t2f.png' : '../../../assets/image/t2.png'" style="height: 24px;width: 24px;"/>
+      
+    </ion-tab-button>
+
+    <ion-tab-button tab="pagos" >
+      <ion-img [src]=" selectTab == 'pagos' ? '../../../assets/image/t3f.png' : '../../../assets/image/t3.png'" style="height: 24px;width: 24px;"/>
+      
+    </ion-tab-button>
+    <ion-tab-button tab="configuracion">
+      <ion-img [src]=" selectTab == 'configuracion' ? '../../../assets/image/t4f.png' : '../../../assets/image/t4.png'" style="height: 24px;width: 24px;"/>
+    
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>
