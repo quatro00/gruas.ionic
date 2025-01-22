@@ -3,6 +3,7 @@ import { LoadingController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { PagosService } from 'src/app/services/pagos.service';
 import { ServicioService } from 'src/app/services/servicios.service';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-tab-home',
@@ -11,6 +12,9 @@ import { ServicioService } from 'src/app/services/servicios.service';
   standalone:false
 })
 export class TabHomePage implements OnInit {
+
+  lat: number = 0;
+  lon: number = 0;
 
   serviciosProximos:any = 0;
   totalEnElMes:number = 0;
@@ -24,10 +28,22 @@ export class TabHomePage implements OnInit {
 
   ngOnInit() {
     this.loadData();
+    this.getLocation();
   }
 
   onCotizar(){
 
+  }
+
+  async getLocation() {
+    try {
+      const coordinates = await Geolocation.getCurrentPosition();
+      this.lat = coordinates.coords.latitude;
+      this.lon = coordinates.coords.longitude;
+      console.log('Latitud:', this.lat, 'Longitud:', this.lon);
+    } catch (error) {
+      console.error('Error obteniendo la ubicación:', error);
+    }
   }
 
   calculateDistance(lat1:number, lon1:number, lat2:number, lon2:number) {
@@ -73,6 +89,21 @@ services.sort((a, b) => {
       ]) => {
         this.serviciosProximos = serviciosProximosResponse.length;
         this.serviciosDisponibles = getServiciosDisponiblesResponse;
+
+        console.log('sin ordenar', this.serviciosDisponibles);
+        console.log(this.lat, this.lon);
+        if(this.lat != 0 && this.lon != 0){
+          this.serviciosDisponibles = this.serviciosDisponibles.sort((a, b) => {
+            const distanceA = this.calculateDistance(this.lat, this.lon, a.latOrigen, a.lonOrigen);
+            const distanceB = this.calculateDistance(this.lat, this.lon, b.latOrigen, b.lonOrigen);
+            return distanceA - distanceB;
+          });
+
+          console.log('ordenados', this.serviciosDisponibles);
+        }
+        
+
+
         pagosMensualesResponse.forEach((element:any) => {
           this.totalEnElMes = this.totalEnElMes + element.monto;
         });

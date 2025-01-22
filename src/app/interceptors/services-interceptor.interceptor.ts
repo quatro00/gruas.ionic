@@ -38,7 +38,7 @@ export class ServicesInterceptorInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error: any) => {
-        console.log('token ',localStorage.getItem('Authorization'));
+        console.log('token ',localStorage.getItem('ServiciosMC.Token'));
         console.log('error--->>>', error);
         var tipoError: number = error.status;
         var errorMsg: string = '';

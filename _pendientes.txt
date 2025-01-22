@@ -1,0 +1,1 @@
+colocar permisos de geolocalizacion en android y ios
