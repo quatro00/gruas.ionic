@@ -27,8 +27,9 @@ export class TabHomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadData();
+    
     this.getLocation();
+    this.loadData();
   }
 
   onCotizar(){
