@@ -40,14 +40,14 @@
   <div class="box1" style="background-color: var(--ion-color-box);margin-top: 15px;margin-bottom: 80px;">
     <div class="list">
       <div style="height: 20px;width: 4px;background-color: #CABDFF;border-radius: 20px;"></div>
-      <ion-text class="s18" style="margin-left: 10px;flex: 1;">Servicios por cotizar</ion-text>
+      <ion-text class="s18" style="margin-left: 10px;flex: 1;">Servicios por cotizar ({{serviciosDisponibles.length}})</ion-text>
       <div routerLink="/cleanigservice" class="icono list" style="height: 35px;border: 1px solid var(--ion-color-lines);border-radius: 30px;">
         <ion-icon name="filter" style="font-size: 13px;color: var(--ion-color-txt1);"/>
       </div>
     </div>
     <div>
       <div *ngFor="let servicio of serviciosDisponibles">
-        <div routerLink="/bsdetail" class="list2">
+        <div class="list2">
           <div style="margin-left: 15px;flex: 1;">
 
             <div class="list" style="margin-bottom: 8px;">
@@ -94,7 +94,8 @@
             </div>
 
             <div style="margin-top: 10px;">
-              <ion-button expand="block" color="primary" (click)="onCotizar()">Cotizar</ion-button>
+              <ion-button expand="block" color="primary" (click)="openModal(servicio.id, 1)" *ngIf="servicio.estatus ==='Por cotizar'">Cotizar</ion-button>
+              <ion-button expand="block" color="primary" (click)="openModal(servicio.cotizacionId, 0)" *ngIf="servicio.estatus ==='Cotizado'">Modificar cotización</ion-button>
             </div>
 
           </div>
@@ -104,3 +105,63 @@
     </div>
   </div>
 </ion-content>
+
+
+
+<ion-modal
+cssClass="rbsheet"
+id="modal-cotizacion"
+[initialBreakpoint]="0.60"
+[breakpoints]="[0, 0.60]"
+handleBehavior="cycle"
+>
+<ng-template>
+  <ion-content class="ion-padding" style="margin-bottom: 50px;">
+    <div class="ion-margin-top" >
+
+      <div class="ion-text-center" style="margin-top: 20px;">
+        <ion-text class="subtitle" *ngIf ="tipo === 1">Cotizar servicio</ion-text>
+        <ion-text class="subtitle" *ngIf ="tipo === 0">Modificar cotización</ion-text>
+      </div>
+
+      <form  [formGroup]="loginForm" (ngSubmit)="enviaCotizacion()">      
+        <div style="margin-top: 20px;">
+          <ion-text class="s15" >Costo</ion-text>
+        </div>
+        <div lines="none" class="input" style="margin-top: 10px" >
+            <div style="height: 29px;width: 1px;background-color: var(--ion-color-border);"></div>
+          <ion-input  formControlName="costo" type="number" placeholder="Costo" style="margin-left: 10px;"></ion-input>
+          <div *ngIf="loginForm.get('costo')?.hasError('required') && loginForm.get('costo')?.touched" class="error">
+           *
+          </div>
+        </div>
+        <div style="margin-top: 20px;">
+          <ion-text class="s15" >Tiempo</ion-text>
+        </div>
+        <div lines="none" class="input" style="margin-top: 10px" >
+          <div style="height: 29px;width: 1px;background-color: var(--ion-color-border);"></div>
+        <ion-input formControlName="tiempo" type="number" placeholder="Tiempo" style="margin-left: 10px;"></ion-input>
+        <div *ngIf="loginForm.get('tiempo')?.hasError('required') && loginForm.get('tiempo')?.touched" class="error">
+          *
+        </div>
+      </div>
+      <div style="margin-top: 20px;">
+        <ion-text class="s15" >Grua</ion-text>
+      </div>
+      <ion-select formControlName="grua" placeholder="Seleccione una grúa">
+        <ion-select-option *ngFor="let grua of gruas" [value]="grua.id">
+          {{ grua.modelo }} - {{ grua.marca }}
+        </ion-select-option>
+      </ion-select>
+      <div *ngIf="loginForm.get('grua')?.hasError('required') && loginForm.get('grua')?.touched" class="error"> *</div>
+    
+        <ion-button expand="block"  type="submit" color="primary" style="margin-top: 20px;margin-bottom: 20px;" [disabled]="loginForm.invalid">Cotizar</ion-button>
+      
+      </form>
+      
+
+
+    </div>
+  </ion-content>
+</ng-template>
+</ion-modal>

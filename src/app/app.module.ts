@@ -8,11 +8,14 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ServicesInterceptorInterceptor } from './interceptors/services-interceptor.interceptor';
+import { CotizacionComponent } from './components/cotizacion/cotizacion.component';
+import { FormsModule } from '@angular/forms'; 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, CotizacionComponent],
   imports: [
     BrowserModule, 
+    FormsModule,
     IonicModule.forRoot(), 
     AppRoutingModule,
     HttpClientModule],

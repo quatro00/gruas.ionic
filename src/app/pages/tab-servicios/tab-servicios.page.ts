@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { forkJoin } from 'rxjs';
+import { ServicioService } from 'src/app/services/servicios.service';
 
 @Component({
   selector: 'app-tab-servicios',
@@ -8,12 +12,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabServiciosPage implements OnInit {
   darkMode = false;
-
-  constructor() { }
+  serviciosProximos:any[]=[];
+  constructor(
+    private fb: FormBuilder,
+        private serviciosService:ServicioService,
+        private loadingController: LoadingController,
+        private modalController: ModalController,
+        private toastController:ToastController
+  ) { }
 
   ngOnInit(): void {
     this.checkAppMode();
+    this.loadData();
   }
+
+  async loadData() {
+    const loading = await this.loadingController.create({
+      message: 'Espere...',
+      spinner: 'circles',
+    });
+    await loading.present();
+
+    forkJoin([
+          this.serviciosService.GetServiciosProximos()
+        ]).subscribe({
+          next: ([
+            serviciosProximosResponse,
+          ]) => {
+            this.serviciosProximos = serviciosProximosResponse;
+            console.log(this.serviciosProximos);
+            
+          },
+          complete: () => {
+            loading.dismiss();
+            //this.isLoading = false;
+            //this.showContent = true;
+          },
+          error: () => {
+            loading.dismiss();
+            //this.isLoading = false;
+            // Maneja el error si es necesario
+            //this.msg.error("Ocurrio un error inesperado.");
+          }
+        });
+
+  }
+
+
+  
 
   async checkAppMode() {
     const checkIsDarkMode = localStorage.getItem('darkModeActivated');

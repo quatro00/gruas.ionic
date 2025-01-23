@@ -16,8 +16,19 @@ export class ServicesInterceptorInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
-    private msg: ToastController
+    private msg: ToastController,
+    private toastController:ToastController
   ) { }
+
+  async showToast(message: string, tipo:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000, // Duración del mensaje en milisegundos
+      position: 'top', // Muestra el mensaje en la parte superior
+      color: tipo, // Color del toast (puede ser "primary", "success", "danger", etc.)
+    });
+    await toast.present();
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler):
     Observable<HttpEvent<unknown>> {
@@ -49,6 +60,7 @@ export class ServicesInterceptorInterceptor implements HttpInterceptor {
             break;
           case 400:
             errorMsg = error.error.errors.error[0];
+            this.showToast(errorMsg,'danger');
             //this.authService.logout();
             break;
           default:

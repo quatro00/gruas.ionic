@@ -22,7 +22,7 @@
 
   <div *ngIf="selectedseg==='Upcoming'" >
 
-    <div class="box1"  style="margin-top: 5px;padding: 50px 16px;">
+    <div class="box1"  style="margin-top: 5px;padding: 50px 16px;" *ngIf="serviciosProximos.length == 0">
   
       <ion-img src="../../../../assets/image/a45.png" style="height: 90px;width: 100%;"></ion-img>
   
@@ -35,6 +35,64 @@
       </div>
     </div>  
   
+    <div *ngIf="serviciosProximos.length > 0">
+      <div *ngFor="let servicio of serviciosProximos">
+        <div class="list2">
+          <div style="margin-left: 15px;flex: 1;">
+
+            <div class="list" style="margin-bottom: 8px;">
+              <ion-text class="s15" style="margin-left: 10px;flex:1">Folio # {{ servicio.folio }}</ion-text>
+              <ion-icon name="ellipsis-horizontal" style="font-size: 20px;color: #6F767E;" />
+            </div>
+            <div style="margin-top: 5px;margin-bottom: 5px;">
+              <table style="width: 100%;">
+                <tr>
+                  <td style="padding-bottom:10px" colspan="2">
+                    <ion-text class="m12">📍<b>Origen: </b>{{ servicio.origen }}</ion-text>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding-bottom:10px" colspan="2">
+                    <ion-text class="m12">📍<b>Destino: </b>{{ servicio.destino }}</ion-text>
+                  </td>
+                </tr>
+
+                <tr style="margin-top: 5px;margin-bottom: 5px;">
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">🛣️<b>Distancia: </b>{{ servicio.kms }} Kms.</ion-text>
+                  </td>
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">🚗<b>Vehiculo: </b>{{ servicio.tipoVehiculo }}</ion-text>
+                  </td>
+                </tr>
+
+                <tr style="margin-top: 5px;margin-bottom: 5px;">
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">📅{{ servicio.fecha }} {{servicio.hora}}</ion-text>
+                  </td>
+                  <td style="padding-bottom:10px">
+                    <ion-text class="m12">🔧<b>Maniobras: </b>{{ servicio.maniobras }}</ion-text>
+                  </td>
+                </tr>
+                
+
+              </table>
+            </div>
+            <div class="tag" style="width: 100%;">
+              <ion-text class="s12" style="color: #1A1D1F;">Sugerido:{{ servicio.totalSugerido | currency}} | Cotizado: {{servicio.totalCotizado | currency}}</ion-text>
+            </div>
+
+            <div style="margin-top: 10px;">
+              <ion-button expand="block" color="primary" *ngIf="servicio.estatus ==='En espera de cotizaciones'">Cotizar</ion-button>
+              <ion-button expand="block" color="primary" *ngIf="servicio.estatus ==='Cotizado'">Modificar cotización</ion-button>
+            </div>
+
+          </div>
+        </div>
+        <div class="lines"></div>
+      </div>
+    </div>
   
   </div>  
 

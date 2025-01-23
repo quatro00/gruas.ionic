@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { PagosService } from 'src/app/services/pagos.service';
 import { ServicioService } from 'src/app/services/servicios.service';
 import { Geolocation } from '@capacitor/geolocation';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CotizacionComponent } from '../../components/cotizacion/cotizacion.component';
+import { GruaService } from 'src/app/services/grua.service';
 
 @Component({
   selector: 'app-tab-home',
@@ -16,24 +19,134 @@ export class TabHomePage implements OnInit {
   lat: number = 0;
   lon: number = 0;
 
+  servicioId:any='';
+  cotizacionId:any='';
+  tipo:any;
   serviciosProximos:any = 0;
   totalEnElMes:number = 0;
   serviciosDisponibles:any[]=[];
+  gruas:any[]=[];
+
+  loginForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private serviciosService:ServicioService,
     private pagosService:PagosService,
-    private loadingController: LoadingController
-  ) { }
+    private loadingController: LoadingController,
+    private modalController: ModalController,
+    private gruaService:GruaService,
+    private toastController:ToastController
+  ) { 
+    this.loginForm = this.fb.group({
+          costo: ['', Validators.required], // Campo requerido
+          tiempo: ['', Validators.required], // Campo requerido
+          grua: ['', Validators.required], // Campo requerido
+        });
+  }
 
+  async enviaCotizacion() {
+      // Muestra el loader
+      const loading = await this.loadingController.create({
+        message: 'Enviando cotización...',
+        spinner: 'circles',
+      });
+      await loading.present();
+  
+      // Crea el objeto de la petición
+      const loginRequest: any = {
+        servicioId: this.servicioId, // Cambia por los valores reales del formulario
+        gruaId: this.loginForm.value.grua,
+        costo: this.loginForm.value.costo,
+        tiempo: this.loginForm.value.tiempo
+      };
+
+      const loginRequest_modificar: any = {
+        cotizacionId: this.servicioId, // Cambia por los valores reales del formulario
+        gruaId: this.loginForm.value.grua,
+        costo: this.loginForm.value.costo,
+        tiempo: this.loginForm.value.tiempo
+      };
+      
+      // Crear cotizacion
+      if(this.tipo == 1){
+        this.serviciosService.EnviarCotizacionProveedor(loginRequest).subscribe({
+          next: async (response: any) => {
+            await this.showToast('Cotización enviada correctamente.', 'success');
+            this.modalController.dismiss();
+            this.loadData();
+            await loading.dismiss(); // Oculta el loader
+  
+            console.log(response,'respuesta');
+          },
+          error: async (err:any) => {
+            //console.error(err.error.errors.error[0]);
+            console.log(err,'error');
+            await loading.dismiss(); // Oculta el loader incluso si ocurre un error
+          },
+        });
+      }
+
+      //modificar cotizacion
+      if(this.tipo == 0){
+        this.serviciosService.ModificarCotizacionProveedor(loginRequest_modificar).subscribe({
+          next: async (response: any) => {
+            await this.showToast('Cotización modificada correctamente.', 'success');
+            this.modalController.dismiss();
+            this.loadData();
+            await loading.dismiss(); // Oculta el loader
+  
+            console.log(response,'respuesta');
+          },
+          error: async (err:any) => {
+            //console.error(err.error.errors.error[0]);
+            console.log(err,'error');
+            await loading.dismiss(); // Oculta el loader incluso si ocurre un error
+          },
+        });
+      }
+
+
+      
+      
+    }
+
+  async openModal(servicioId:any, tipo:any) {
+    this.tipo = tipo;
+    this.servicioId = servicioId;
+    this.cotizacionId = servicioId;
+
+    const modalElement = document.getElementById('modal-cotizacion') as HTMLIonModalElement;
+    if (modalElement) {
+      await modalElement.present();
+    }
+  }
   ngOnInit() {
     
     this.getLocation();
     this.loadData();
   }
 
+  async showToast(message: string, tipo:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3000, // Duración del mensaje en milisegundos
+      position: 'top', // Muestra el mensaje en la parte superior
+      color: tipo, // Color del toast (puede ser "primary", "success", "danger", etc.)
+    });
+    await toast.present();
+  }
+
   onCotizar(){
 
+  }
+
+  close(){
+    this.modalController.dismiss();
+  }
+
+  close1(){
+    this.modalController.dismiss();
   }
 
   async getLocation() {
@@ -81,16 +194,19 @@ services.sort((a, b) => {
     forkJoin([
       this.serviciosService.GetServiciosProximos(),
       this.serviciosService.GetServiciosDisponibles(),
-      this.pagosService.GetPagosMensuales()
+      this.pagosService.GetPagosMensuales(),
+      this.gruaService.GetGruasProveedor()
     ]).subscribe({
       next: ([
         serviciosProximosResponse,
         getServiciosDisponiblesResponse,
-        pagosMensualesResponse
+        pagosMensualesResponse,
+        getGruasProveedorResponse
       ]) => {
         this.serviciosProximos = serviciosProximosResponse.length;
         this.serviciosDisponibles = getServiciosDisponiblesResponse;
-
+        this.gruas = getGruasProveedorResponse;
+        
         console.log('sin ordenar', this.serviciosDisponibles);
         console.log(this.lat, this.lon);
         if(this.lat != 0 && this.lon != 0){

@@ -20,4 +20,12 @@ export class ServicioService {
   GetServiciosDisponibles():Observable<any>{
     return this.http.get<any>(`${environment.apiBaseUrl}/api/${this.service}/GetServiciosDisponibles`);
   }
+
+  EnviarCotizacionProveedor(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/EnviarCotizacionProveedor`,request);
+  }
+
+  ModificarCotizacionProveedor(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/ModificarCotizacionProveedor`,request);
+  }
 }

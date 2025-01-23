@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Modal Centrado</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="padding: 20px; text-align: center;">
+    <h2>Contenido del Modal</h2>
+    <ion-item>
+      <ion-label position="floating">Campo 1</ion-label>
+      <ion-input placeholder="Ingresa un valor"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Campo 2</ion-label>
+      <ion-input placeholder="Ingresa un valor"></ion-input>
+    </ion-item>
+    <ion-button expand="block" (click)="dismissModal()">Cerrar</ion-button>
+  </div>
+</ion-content>
