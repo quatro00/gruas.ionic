@@ -38,12 +38,27 @@ export class AuthService {
   }
 
 
+  async RestablecerPassword_Loader(request: any): Promise<Observable<any>> {
+    const loading = await this.loadingController.create({
+      message: 'Espere...',
+      spinner: 'circles',
+    });
+    await loading.present();
+
+    return this.http
+      .post<any>(`${environment.apiBaseUrl}/api/Auth/forgot-password`, request)
+      .pipe(finalize(() => loading.dismiss()));
+  }
 
   Login(request:LoginRequest):Observable<LoginResponse>{
     return this.http.post<LoginResponse>(`${environment.apiBaseUrl}/api/Auth/loginColaborador`,{
       Username: request.Username,
       Password: request.Password
     });
+  }
+
+  RestablecerPassword(request:any):Observable<LoginResponse>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/Auth/forgot-password`,request);
   }
 
   logout():void{

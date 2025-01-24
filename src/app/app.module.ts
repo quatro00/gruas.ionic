@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -11,6 +11,7 @@ import { ServicesInterceptorInterceptor } from './interceptors/services-intercep
 import { CotizacionComponent } from './components/cotizacion/cotizacion.component';
 import { FormsModule } from '@angular/forms'; 
 
+
 @NgModule({
   declarations: [AppComponent, CotizacionComponent],
   imports: [
@@ -22,7 +23,7 @@ import { FormsModule } from '@angular/forms';
   providers: [
     { 
       provide: RouteReuseStrategy, 
-      useClass: IonicRouteStrategy 
+      useClass: IonicRouteStrategy ,
     },
     {
       provide: HTTP_INTERCEPTORS,

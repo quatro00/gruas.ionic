@@ -16,4 +16,9 @@ export class PagosService {
   GetPagosMensuales():Observable<any>{
     return this.http.get<any>(`${environment.apiBaseUrl}/api/${this.service}/GetPagosMensuales`);
   }
+
+  GetPagos(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetPagos`,request);
+  }
+
 }

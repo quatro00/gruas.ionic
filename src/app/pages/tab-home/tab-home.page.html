@@ -2,6 +2,7 @@
   <ion-toolbar color="bg1" style="padding: 5px 15px;--border-width: 0 0;">
     <div class="list">
       <div class="vchip"></div>
+      <ion-img src="../../../assets/image/logo.ico" style="height: 30px;width: 30px;"></ion-img>
       <ion-text class="s18" style="flex:1">Inicio</ion-text>
     </div>
   </ion-toolbar>
@@ -15,7 +16,7 @@
           <ion-text class="s13" style="color: #33383F;">Serv. proximos</ion-text>
         </div>
         <ion-text class="s13" style="color: #33383F;font-size: 15px;">{{ serviciosProximos }}</ion-text>
-        <div class="chip list"
+        <div (click)="goToServiciosProximos()" class="chip list"
           style="border-width: 0;background-color: #FFFFFF;margin-top: 10px;width: 120px;padding: 0 8px;height: 30px;">
           <ion-text class="m14" style="color: #6A9B7E;">Ver detalle</ion-text>
           <ion-icon name="chevron-forward" style="font-size: 16px;color: #6A9B7E;margin-left: 5px;" />
@@ -28,7 +29,7 @@
           <ion-text class="s13" style="color: #33383F;">Total en el mes</ion-text>
         </div>
         <ion-text class="s13" style="color: #33383F;font-size: 15px;">{{ totalEnElMes  | currency:'MXN':'symbol':'1.2-2'}}</ion-text>
-        <div class="chip list"
+        <div  (click)="goToTotalEnElMes()" class="chip list"
           style="border-width: 0;background-color: #FFFFFF;margin-top: 10px;width: 120px;padding: 0 8px;height: 30px;">
           <ion-text class="m14" style="color: #6A9B7E;">Ver detalle</ion-text>
           <ion-icon name="chevron-forward" style="font-size: 16px;color: #6A9B7E;margin-left: 5px;" />
@@ -41,9 +42,12 @@
     <div class="list">
       <div style="height: 20px;width: 4px;background-color: #CABDFF;border-radius: 20px;"></div>
       <ion-text class="s18" style="margin-left: 10px;flex: 1;">Servicios por cotizar ({{serviciosDisponibles.length}})</ion-text>
+      
+      <!--
       <div routerLink="/cleanigservice" class="icono list" style="height: 35px;border: 1px solid var(--ion-color-lines);border-radius: 30px;">
         <ion-icon name="filter" style="font-size: 13px;color: var(--ion-color-txt1);"/>
       </div>
+      -->
     </div>
     <div>
       <div *ngFor="let servicio of serviciosDisponibles">
@@ -52,7 +56,9 @@
 
             <div class="list" style="margin-bottom: 8px;">
               <ion-text class="s15" style="margin-left: 10px;flex:1">Folio # {{ servicio.folio }}</ion-text>
+              <!--
               <ion-icon name="ellipsis-horizontal" style="font-size: 20px;color: #6F767E;" />
+              -->
             </div>
             <div style="margin-top: 5px;margin-bottom: 5px;">
               <table style="width: 100%;">

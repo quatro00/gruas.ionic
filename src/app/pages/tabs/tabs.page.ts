@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonTabs } from '@ionic/angular';
+import { FormBuilder } from '@angular/forms';
+import { IonTabs, LoadingController, ToastController } from '@ionic/angular';
+import { forkJoin } from 'rxjs';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 
 @Component({
@@ -12,11 +15,22 @@ export class TabsPage implements OnInit {
 
   darkMode = false;
 
-  constructor() { }
+  
+  
+
+  constructor(
+    private fb: FormBuilder,
+    private usuariosService:UsuariosService,
+        private loadingController: LoadingController,
+        private toastController:ToastController
+  ) { }
 
   ngOnInit(): void {
     this.checkAppMode();
+    //this.loadData();
   }
+
+  
 
   async checkAppMode() {
     const checkIsDarkMode = localStorage.getItem('darkModeActivated');

@@ -7,6 +7,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CotizacionComponent } from '../../components/cotizacion/cotizacion.component';
 import { GruaService } from 'src/app/services/grua.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-home',
@@ -36,7 +37,8 @@ export class TabHomePage implements OnInit {
     private loadingController: LoadingController,
     private modalController: ModalController,
     private gruaService:GruaService,
-    private toastController:ToastController
+    private toastController:ToastController,
+    private router: Router
   ) { 
     this.loginForm = this.fb.group({
           costo: ['', Validators.required], // Campo requerido
@@ -182,6 +184,16 @@ services.sort((a, b) => {
 });
 
 */
+
+  async goToServiciosProximos(){
+    this.router.navigate(['/tabs/servicios']); 
+  }
+
+  async goToTotalEnElMes(){
+    this.router.navigate(['/tabs/pagos']); 
+  }
+
+
   async loadData() {
 
     const loading = await this.loadingController.create({

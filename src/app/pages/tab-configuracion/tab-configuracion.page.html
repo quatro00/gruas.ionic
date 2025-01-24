@@ -2,6 +2,7 @@
   <ion-toolbar color="bg1" style="padding: 5px 15px;--border-width: 0 0;">
     <div class="list">
       <div class="vchip"></div>
+      <ion-img src="../../../assets/image/logo.ico" style="height: 30px;width: 30px;"></ion-img>
       <ion-text class="s18" style="flex:1">Configuración</ion-text>
     </div>
   </ion-toolbar>
@@ -26,26 +27,49 @@
   
 
   <div *ngIf="selectedseg==='Perfil'" >
+      <div class="box1 list" style="background-color: var(--ion-color-box);margin-top: 15px;">
+        <div style="margin-left: 10px;flex: 1;">
+          <ion-text class="b16" >{{ razonSocial }}</ion-text>
+          <div style="margin-top: 3px;">
+            <ion-text class="m13" style="color: var(--ion-color-dis);">{{ direccion }}</ion-text>
+          </div>
+          <div style="margin-top: 3px;">
+            <ion-text class="m13" style="color: var(--ion-color-dis);">{{ rfc }}</ion-text>
+          </div>
+        </div>
+      </div>
+    
+      
+      <div class="box1" style="background-color: var(--ion-color-box);margin-top: 15px;margin-bottom: 90px;">
+        <ion-text class="s15" >Nombre</ion-text>
+        <div class="input" style="background-color: var(--ion-color-fb);margin-top: 10px;margin-bottom: 20px;">
+          <ion-input  [value]="nombre"  readonly style="flex: 1;--placeholder-color:  var(--ion-color-txt);"/>
+        </div>
 
-    <div class="box1"  style="margin-top: 5px;padding: 50px 16px;">
-  
-      <ion-img src="../../../../assets/image/a45.png" style="height: 90px;width: 100%;"></ion-img>
-  
-      <div class="ion-text-center" style="margin-top: 30px;">
-        <ion-text class="subtitle" >No existen servicios proximos</ion-text>
+        <ion-text class="s15" >Nombre de usuario</ion-text>
+        <div class="input" style="background-color: var(--ion-color-fb);margin-top: 10px;margin-bottom: 20px;">
+          <ion-input   [value]="nombreUsuario" readonly  type="tel" style="flex: 1;--placeholder-color:  var(--ion-color-txt);"/>
+        </div>
+
+        <ion-text class="s15" >Teléfono</ion-text>
+        <div class="input" style="background-color: var(--ion-color-fb);margin-top: 10px;margin-bottom: 20px;">
+          <ion-input [value]="telefono" readonly style="flex: 1;--placeholder-color:  var(--ion-color-txt);"/>
+        </div>
+    
+        <ion-text class="s15" >Correo electrónico</ion-text>
+        <div class="input" style="background-color: var(--ion-color-fb);margin-top: 10px;margin-bottom: 20px;">
+          <ion-input [value]="correoElectronico" readonly  style="flex: 1;--placeholder-color:  var(--ion-color-txt);"/>
+        </div>
       </div>
-  
-      <div class="ion-text-center" style="margin-top: 10px;">
-        <ion-text class="m14" style="color: var(--ion-color-txt1);">Actualmente no tienes servicios próximos, aqui podras visualizar los servicios asignados.</ion-text>
-      </div>
-    </div>  
+    
+    
   
   
   </div>  
 
   <div *ngIf="selectedseg==='Gruas'" >
 
-    <div class="box1"  style="margin-top: 5px;padding: 50px 16px;">
+    <div class="box1"  style="margin-top: 5px;padding: 50px 16px;" *ngIf="gruas.length == 0">
   
       <ion-img src="../../../../assets/image/a45.png" style="height: 90px;width: 100%;"></ion-img>
   
@@ -59,25 +83,70 @@
     </div>  
   
   
+    <div class="box1" *ngFor="let grua of gruas">
+      <div class="list">
+        <div style="flex:1;margin-left: 15px;">
+          <div class="list1">
+            <ion-text class="b16">{{grua.marca}}-{{grua.modelo}}</ion-text>
+            <div class="tag" style="background-color: #7FC09C10;width: 81px;"  *ngIf="grua.activo === 1">
+              <ion-text class="s14" style="color: #7FC09C;">Activo</ion-text>
+            </div>
+
+            <div class="tag" style="background-color: #EB833C10;width: 81px;" *ngIf="grua.activo === 0">
+              <ion-text class="s14" style="color: #EB833C;">Inactivo</ion-text>
+            </div>
+
+          </div>
+          <div>
+            <ion-text class="m12" style="color: #6F767E;">{{ grua.placas }} - {{ grua.tipoGrua }}</ion-text>
+          </div>
+        </div>
+      </div>
+      <div class="lines" style="border-color: #6F767E20;"></div>
+     
+      
+    </div>
+  
   </div>  
 
   <div *ngIf="selectedseg==='Contacto'" >
 
     <div class="box1"  style="margin-top: 5px;padding: 50px 16px;">
   
-      <ion-img src="../../../../assets/image/a45.png" style="height: 90px;width: 100%;"></ion-img>
-  
-      <div class="ion-text-center" style="margin-top: 30px;">
-        <ion-text class="subtitle" >No existen datos de contacto</ion-text>
+      <div class="list">
+        <div style="flex:1;margin-left: 15px;">
+          <div class="list1">
+            <ion-text class="b16">Telefono:<br>+52 8112545746</ion-text>
+            <div class="tag" style="background-color: #7FC09C10;width: 81px;">
+              <ion-text class="s14" style="color: #7FC09C;">Llamar</ion-text>
+            </div>          
+          
+        </div>
+      </div>
+      <div class="lines" style="border-color: #6F767E20;"></div>
       </div>
   
-      <div class="ion-text-center" style="margin-top: 10px;">
-        <ion-text class="m14" style="color: var(--ion-color-txt1);">Actualmente no existen datos de contacto.</ion-text>
+  
+  </div>
+  
+  <div class="box1"  style="margin-top: 5px;padding: 50px 16px;">
+  
+    <div class="list">
+      <div style="flex:1;margin-left: 15px;">
+        <div class="list1">
+          <ion-text class="b16">Correo:<br>{{correo}}</ion-text>
+          <div class="tag" style="background-color: #7FC09C10;width: 81px;">
+            <ion-text class="s14" style="color: #7FC09C;">Enviar</ion-text>
+          </div>          
+        
       </div>
-    </div>  
-  
-  
-  </div>  
+    </div>
+    <div class="lines" style="border-color: #6F767E20;"></div>
+    </div>
 
+
+</div> 
+
+  </div>
 
 </ion-content>
