@@ -22,4 +22,8 @@ export class ReportesService {
   GetServiciosProveedor(request:any):Observable<any>{
     return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetServiciosProveedor`,request);
   }
+
+  GetServiciosProveedorMensuales(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiBaseUrl}/api/${this.service}/GetServiciosProveedorMensuales`,request);
+  }
 }
